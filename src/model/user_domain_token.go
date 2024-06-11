@@ -7,6 +7,7 @@ import (
 	toolkit "github.com/renatofagalde/golang-toolkit"
 	"os"
 	"strings"
+	"time"
 )
 
 var (
@@ -14,26 +15,26 @@ var (
 	TOKEN_INVALIDO = "token inválido"
 )
 
-//func (ud *userDomain) GenerateToken() (string, *toolkit.RestErr) {
-//
-//	//todo read from app.env
-//	secretKey := os.Getenv(JWT_SECRET_KEY)
-//	var rest_err toolkit.RestErr
-//
-//	//quais campos dentro do jwt
-//	claims := jwt.MapClaims{
-//		"id":    ud.id,
-//		"email": ud.email,
-//		"name":  ud.name,
-//		"exp":   time.Now().Add(time.Hour * 12).Unix(),
-//	}
-//	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-//	tokenString, err := token.SignedString([]byte(secretKey))
-//	if err != nil {
-//		return "", rest_err.NewInternalServerError(fmt.Sprintf("erro ao gerar jwt token, err=%s", err.Error()))
-//	}
-//	return tokenString, nil
-//}
+func (ud *userDomain) GenerateToken() (string, *toolkit.RestErr) {
+
+	//todo read from app.env
+	secretKey := os.Getenv(JWT_SECRET_KEY)
+	var rest_err toolkit.RestErr
+
+	//quais campos dentro do jwt
+	claims := jwt.MapClaims{
+		"id":    ud.id,
+		"email": ud.email,
+		"name":  ud.name,
+		"exp":   time.Now().Add(time.Hour * 8).Unix(),
+	}
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, err := token.SignedString([]byte(secretKey))
+	if err != nil {
+		return "", rest_err.NewInternalServerError(fmt.Sprintf("erro ao gerar jwt token, err=%s", err.Error()))
+	}
+	return tokenString, nil
+}
 
 func VerifyTokenMiddleware(c *gin.Context) {
 	secretKey := os.Getenv(JWT_SECRET_KEY)

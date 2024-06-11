@@ -8,4 +8,5 @@ import (
 func InitRoutes(r *gin.RouterGroup, userController controller.UserControllerInterface) {
 
 	r.GET("/email/:email", userController.FindUserByEmail)
+	r.POST("/login", userController.Login)
 }

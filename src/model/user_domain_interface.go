@@ -1,11 +1,20 @@
 package model
 
-func NewUserDomain(email string, password string, name string) UserDomainInterface {
+import toolkit "github.com/renatofagalde/golang-toolkit"
+
+func NewUserDomain(id string, email string, password string, name string) UserDomainInterface {
 	return &userDomain{
+		id:       id,
 		email:    email,
 		password: password,
 		name:     name,
 	}
+}
+
+func NewUserLoginDomain(email, password string) UserDomainInterface {
+	return &userDomain{
+		email:    email,
+		password: password}
 }
 
 type UserDomainInterface interface {
@@ -14,5 +23,10 @@ type UserDomainInterface interface {
 	GetName() string
 	GetPassword() string
 	SetID(string)
-	//GenerateToken() (string, *toolkit.RestErr)
+	ToJSON() (string, *toolkit.RestErr)
+
+	HashPassword() (string, *toolkit.RestErr)
+	CheckPassword(string, string) *toolkit.RestErr
+
+	GenerateToken() (string, *toolkit.RestErr)
 }

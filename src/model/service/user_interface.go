@@ -16,5 +16,5 @@ type userDomainService struct {
 
 type UserDomainService interface {
 	FindUserByEmail(email string) (model.UserDomainInterface, *toolkit.RestErr)
-	//LoginService(domainService model.UserDomainInterface) (model.UserDomainInterface, string, *toolkit.RestErr)
+	LoginService(domainInterface model.UserDomainInterface) (model.UserDomainInterface, string, *toolkit.RestErr)
 }
