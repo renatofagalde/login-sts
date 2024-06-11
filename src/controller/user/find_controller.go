@@ -1,34 +1,37 @@
 package controller
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"gorm.io/gorm/logger"
+	toolkit "github.com/renatofagalde/golang-toolkit"
+	"go.uber.org/zap"
+	"main/src/view"
 	"net/http"
+	"net/mail"
 )
 
-func (uc *userControllerInterface) FindUserByID(c *gin.Context) {
+func (uc *userControllerInterface) FindUserByEmail(c *gin.Context) {
+	var logger toolkit.Logger
+	var rest_err toolkit.RestErr
 
-	logger.Info("init FindUserByID find_controller")
-	id := c.Param("id")
-
-	if _, err := primitive.ObjectIDFromHex(id); err != nil {
-		message := "ID não é válido"
-		logger.Error(message, err)
+	email := c.Param("email")
+	logger.Info(fmt.Sprintf("FindUserByEmail: %s userControllerInterface", email), zap.String("journey", "FindUserByEmail"))
+	if _, err := mail.ParseAddress(email); err != nil {
+		message := "Email não é válido"
 		errorMessage := rest_err.NewBadRequestError(message)
-
 		c.JSON(errorMessage.Code, errorMessage)
 		return
 	}
 
-	userDomain, err := uc.service.FindUserByIDService(id)
+	userDomain, err := uc.service.FindUserByEmail(email)
 	if err != nil {
-		c.JSON(err.Code, err)
-		message := "Erro ao recuperar ID"
+		message := "Erro ao recuperar email"
 		logger.Error(message, err)
+		c.JSON(http.StatusInternalServerError, err)
 		return
 	}
-	logger.Info("init FindUserByID find_controller successfuly")
 
+	logger.Info(fmt.Sprintf("FindUserByEmail: %s sucesso", email), zap.String("journey", "FindUserByEmail"))
 	c.JSON(http.StatusOK, view.ConvertDomainToResponse(userDomain))
+
 }

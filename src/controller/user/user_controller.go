@@ -6,7 +6,7 @@ import (
 )
 
 type UserControllerInterface interface {
-	FindUserByID(c *gin.Context)
+	FindUserByEmail(c *gin.Context)
 }
 
 func NewControllerInterface(service service.UserDomainService) UserControllerInterface {

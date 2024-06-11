@@ -6,7 +6,6 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	toolkit "github.com/renatofagalde/golang-toolkit"
-	"go.uber.org/zap"
 	"log"
 	postgres "main/src/config/database/postgres/gorm"
 	"main/src/controller/routes"
@@ -32,10 +31,9 @@ func main() {
 	} else {
 		fmt.Println("conexao com sucesso")
 	}
-	logger.Info(fmt.Sprintf("config: %v\n", config), zap.String("init", "main.init.config"))
 
 	userController := initDependencies(database)
-
+	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
 	router.Use(cors.Default())
 	routes.InitRoutes(&router.RouterGroup, userController)

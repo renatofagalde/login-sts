@@ -7,7 +7,7 @@ import (
 	"main/src/model/service"
 )
 
-func initDependencies(database *gorm.DB) controller.ControllerInterface {
+func initDependencies(database *gorm.DB) controller.UserControllerInterface {
 	r := repository.NewUerRepository(database)
 	domainService := service.NewUserDomainService(r)
 	return controller.NewControllerInterface(domainService)

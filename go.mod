@@ -7,7 +7,6 @@ require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/renatofagalde/golang-toolkit v0.0.0-20240610201417-f437b23da9d6
-	go.mongodb.org/mongo-driver v1.15.0
 	go.uber.org/zap v1.27.0
 	gorm.io/driver/postgres v1.5.7
 	gorm.io/gorm v1.25.10
