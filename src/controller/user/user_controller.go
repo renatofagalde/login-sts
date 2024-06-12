@@ -8,6 +8,7 @@ import (
 type UserControllerInterface interface {
 	FindUserByEmail(c *gin.Context)
 	Login(c *gin.Context)
+	TokenVerify(c *gin.Context)
 }
 
 func NewControllerInterface(service service.UserDomainService) UserControllerInterface {

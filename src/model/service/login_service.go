@@ -3,11 +3,14 @@ package service
 import (
 	"fmt"
 	toolkit "github.com/renatofagalde/golang-toolkit"
+	"go.uber.org/zap"
 	"main/src/model"
 )
 
 func (ud *userDomainService) LoginService(userDomain model.UserDomainInterface) (model.UserDomainInterface, string, *toolkit.RestErr) {
-	//var logger toolkit.Logger
+	var logger toolkit.Logger
+
+	logger.Info(fmt.Sprintf("Login: %s LoginService", userDomain.GetEmail()), zap.String("journey", "Login"))
 
 	user, err := ud.FindUserByEmail(userDomain.GetEmail())
 	if err != nil {
