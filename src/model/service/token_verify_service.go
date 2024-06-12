@@ -41,7 +41,7 @@ func (ud *userDomainService) TokenVerify(tokenValue string) *toolkit.RestErr {
 func RemoveBearer(token string) string {
 	const prefix = "Bearer "
 	if strings.HasPrefix(token, prefix) {
-		token = strings.TrimPrefix(prefix, token)
+		token = strings.TrimPrefix(token, prefix)
 	}
 	return token
 }

@@ -24,8 +24,9 @@ func (ud *userDomain) GenerateToken() (string, *toolkit.RestErr) {
 		"id":    ud.id,
 		"email": ud.email,
 		"name":  ud.name,
-		"exp":   time.Now().Add(time.Hour * 8).Unix(),
+		"exp":   time.Now().Add(config.AccessTokenDuration).Unix(),
 	}
+
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, err := token.SignedString([]byte(config.TokenSymmetricKey))
 	if err != nil {

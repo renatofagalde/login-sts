@@ -11,10 +11,6 @@ import (
 	"main/src/controller/routes"
 )
 
-func init() {
-
-}
-
 func main() {
 
 	var tools toolkit.Tools
